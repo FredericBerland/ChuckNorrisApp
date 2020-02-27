@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d("list:", list.toString())
+        Log.d("list:", Jokes.list.toString())
+
     }
 }
