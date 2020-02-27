@@ -3,6 +3,7 @@ package com.example.chucknorrisapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         Log.d("list:", Jokes.list.toString())
+
+        val vRV : RecyclerView = findViewById(R.id.main_rv)
 
     }
 }
