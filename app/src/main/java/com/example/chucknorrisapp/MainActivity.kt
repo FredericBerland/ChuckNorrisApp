@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.serialization.UnstableDefault
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +23,9 @@ class MainActivity : AppCompatActivity() {
 
         val jS = JokeApiServiceFactory.returnService()
         val vSJ = jS.giveMeAJoke()
-        vSJ.subscribeBy(onError = { joke -> TODO("Error on Joke") }, onSuccess = { joke -> TODO("Success on Joke") })
+        //vSJ.subscribeBy(onError = { TODO("Error on Joke") }, onSuccess = { TODO("Success on Joke") })
+        vSJ.subscribeOn(Schedulers.io())
+        Log.d("Joke", vSJ.toString())
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = JokesAdapter()

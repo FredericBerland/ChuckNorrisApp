@@ -12,7 +12,7 @@ import retrofit2.create
 object JokeApiServiceFactory {
 
     fun returnService() : JokeApiService {
-        val url = "https://api.chucknorris.io/jokes/random"
+        val url = "https://api.chucknorris.io/jokes/random/"
         val fac = Json.asConverterFactory(MediaType.get("application/json"))
 
         val requestInterface = Retrofit.Builder()
