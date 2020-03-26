@@ -10,7 +10,8 @@ import retrofit2.create
 
 @UnstableDefault
 object JokeApiServiceFactory {
-    private fun returnService() : JokeApiService {
+
+    fun returnService() : JokeApiService {
         val url = "https://api.chucknorris.io/jokes/random"
         val fac = Json.asConverterFactory(MediaType.get("application/json"))
 
