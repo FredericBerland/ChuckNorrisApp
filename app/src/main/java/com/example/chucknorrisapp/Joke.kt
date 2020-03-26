@@ -32,4 +32,11 @@ class Joke(val categories:List<String>,
         }
         return vB
     }
+
+    /**
+     * Returns a string representation of the object.
+     */
+    override fun toString(): String {
+        return value
+    }
 }
