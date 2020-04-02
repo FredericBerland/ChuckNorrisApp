@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class JokesAdapter : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
+class JokesAdapter() : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
 
-    var jokes : List<Joke> = List(1){Joke(emptyList(), "", "", "", "", "","coucou")}
+    var jokes : List<Joke> = emptyList()
 
     class JokesViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 
@@ -22,5 +22,7 @@ class JokesAdapter : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
         holder.textView.text = jokes[position].toString()
     }
 
-    fun setter(list: List<Joke>) { jokes=list }
+    fun setter(list: List<Joke>) {
+        jokes=list
+    }
 }
