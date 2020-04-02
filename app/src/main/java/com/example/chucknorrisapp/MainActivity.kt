@@ -22,10 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val jS = JokeApiServiceFactory.returnService()
-        val vSJ = jS.giveMeAJoke()
-        //vSJ.subscribeBy(onError = { TODO("Error on Joke") }, onSuccess = { TODO("Success on Joke") })
-        vSJ.subscribeOn(Schedulers.io())
-        Log.d("Joke", vSJ.toString())
+        jS.giveMeAJoke()
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = {Log.d("Joke :", "$it")})
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = JokesAdapter()
