@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.serialization.UnstableDefault
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var CP : CompositeDisposable
 
     @UnstableDefault
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +24,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val jS = JokeApiServiceFactory.returnService()
-        jS.giveMeAJoke()
+        CP = jS.giveMeAJoke()
             .subscribeOn(Schedulers.io())
-            .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = {Log.d("Joke :", "$it")})
+            .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = {Log.d("Joke :", "$it")}) as CompositeDisposable
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = JokesAdapter()
