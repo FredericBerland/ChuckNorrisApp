@@ -2,6 +2,8 @@ package com.example.chucknorrisapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var vBut : Button
     private val cD = CompositeDisposable()
 
     @UnstableDefault
@@ -27,14 +30,9 @@ class MainActivity : AppCompatActivity() {
         viewManager = LinearLayoutManager(this)
         val viewAdapter = JokesAdapter()
 
-        val jS = JokeApiServiceFactory.returnService().giveMeAJoke()
-        val vR = jS
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = { viewAdapter.jokes = listOf(it) })
-        cD.add(vR)
 
-
+        vBut = findViewById(R.id.main_but)
+        vBut.setOnClickListener { addAJoke(viewAdapter) }
 
         recyclerView = findViewById<RecyclerView>(R.id.main_rv).apply {
             setHasFixedSize(true)
@@ -43,5 +41,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         Log.d("Adapter", viewAdapter.jokes.toString())
+    }
+
+    @UnstableDefault
+    fun addAJoke( viewAdapter : JokesAdapter){
+        val jS = JokeApiServiceFactory.returnService().giveMeAJoke()
+        val vR = jS
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = { viewAdapter.jokes = viewAdapter.jokes.plus(it) })
+        cD.add(vR)
     }
 }

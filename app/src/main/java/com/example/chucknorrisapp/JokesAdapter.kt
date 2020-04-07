@@ -5,9 +5,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class JokesAdapter() : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
+class JokesAdapter : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
 
     var jokes : List<Joke> = emptyList()
+        set(vL){
+            field = vL
+            notifyDataSetChanged()
+        }
 
     class JokesViewHolder(val textView: TextView) : RecyclerView.ViewHolder(textView)
 
@@ -20,9 +24,5 @@ class JokesAdapter() : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
 
     override fun onBindViewHolder(holder: JokesViewHolder, position: Int) {
         holder.textView.text = jokes[position].toString()
-    }
-
-    fun setter(list: List<Joke>) {
-        jokes=list
     }
 }
