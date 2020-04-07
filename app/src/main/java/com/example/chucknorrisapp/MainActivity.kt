@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.serialization.UnstableDefault
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var vBut : Button
+    private lateinit var vPB : ProgressBar
     private val cD = CompositeDisposable()
 
     @UnstableDefault
@@ -30,23 +33,26 @@ class MainActivity : AppCompatActivity() {
         viewManager = LinearLayoutManager(this)
         val viewAdapter = JokesAdapter()
 
-
+        vPB = findViewById(R.id.main_pb)
         vBut = findViewById(R.id.main_but)
-        vBut.setOnClickListener { addAJoke(viewAdapter) }
+        vBut.setOnClickListener {
+            vPB.visibility = View.VISIBLE
+            addAJoke(viewAdapter)
+            vPB.visibility = View.INVISIBLE
+        }
 
         recyclerView = findViewById<RecyclerView>(R.id.main_rv).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
-
-        Log.d("Adapter", viewAdapter.jokes.toString())
     }
 
     @UnstableDefault
     fun addAJoke( viewAdapter : JokesAdapter){
         val jS = JokeApiServiceFactory.returnService().giveMeAJoke()
         val vR = jS
+            .delay(5, TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = { viewAdapter.jokes = viewAdapter.jokes.plus(it) })
