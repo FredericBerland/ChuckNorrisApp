@@ -36,9 +36,7 @@ class MainActivity : AppCompatActivity() {
         vPB = findViewById(R.id.main_pb)
         vBut = findViewById(R.id.main_but)
         vBut.setOnClickListener {
-            vPB.visibility = View.VISIBLE
             addAJoke(viewAdapter)
-            vPB.visibility = View.INVISIBLE
         }
 
         recyclerView = findViewById<RecyclerView>(R.id.main_rv).apply {
@@ -52,9 +50,11 @@ class MainActivity : AppCompatActivity() {
     fun addAJoke( viewAdapter : JokesAdapter){
         val jS = JokeApiServiceFactory.returnService().giveMeAJoke()
         val vR = jS
-            .delay(5, TimeUnit.SECONDS)
+            .delay(500, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { vPB.visibility = View.VISIBLE }
+            .doAfterSuccess { vPB.visibility = View.INVISIBLE }
             .subscribeBy(onError = {Log.d("Error :", "$it")}, onSuccess = { viewAdapter.jokes = viewAdapter.jokes.plus(it) })
         cD.add(vR)
     }
