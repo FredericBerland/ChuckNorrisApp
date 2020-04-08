@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class JokesAdapter : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
+class JokesAdapter() : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
 
     var jokes : List<Joke> = emptyList()
         set(vL){

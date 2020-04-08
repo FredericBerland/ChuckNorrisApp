@@ -1,5 +1,6 @@
 package com.example.chucknorrisapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.size
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private lateinit var vBut : Button
     private lateinit var vPB : ProgressBar
     private val cD = CompositeDisposable()
 
@@ -31,20 +32,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewManager = LinearLayoutManager(this)
+
         val viewAdapter = JokesAdapter()
 
         vPB = findViewById(R.id.main_pb)
-        vBut = findViewById(R.id.main_but)
-        vBut.setOnClickListener {
-            add10Joke(viewAdapter)
-        }
 
         recyclerView = findViewById<RecyclerView>(R.id.main_rv).apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        add10Joke(viewAdapter)
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if( (viewManager as LinearLayoutManager).findLastVisibleItemPosition() == viewAdapter.itemCount-1){
+                    add10Joke(viewAdapter)
+                }
+            }
+        })
     }
+
 
     @UnstableDefault
     fun addAJoke( viewAdapter : JokesAdapter){
