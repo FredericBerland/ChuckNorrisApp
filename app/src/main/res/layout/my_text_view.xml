@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="20sp"
-    android:padding="10dp"
-    android:textAlignment="textStart"
-    android:layout_marginBottom="5dp"
-    android:textColor="#000000"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+<com.example.chucknorrisapp.JokeView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <TextView
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:layout_marginBottom="5dp"
+            android:textColor="#000000"
+            android:id="@+id/my_tv"/>
+
+    <ImageView
+        android:id="@+id/my_share"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_share_black_24dp"
+        app:layout_constraintLeft_toRightOf="@+id/my_tv"
+        tools:layout_editor_absoluteY="6dp"
+        android:layout_marginStart="10dp"/>
+
+    <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_star_border_black_24dp"
+            android:id="@+id/my_star"
+            app:layout_constraintLeft_toRightOf="@+id/my_share"
+            tools:layout_editor_absoluteY="6dp"
+        android:layout_marginStart="10dp"/>
+</com.example.chucknorrisapp.JokeView>
+

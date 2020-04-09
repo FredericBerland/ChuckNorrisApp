@@ -3,7 +3,9 @@ package com.example.chucknorrisapp
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,10 +17,7 @@ import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-import kotlinx.serialization.serializer
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onSaveInstanceState(savedInstanceState: Bundle){
         super.onSaveInstanceState(savedInstanceState)
         var i = 0
@@ -85,28 +83,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        try {
-            var vList = emptyList<Joke>()
-            val n = savedInstanceState.getInt("Size")
-            lateinit var vS : String
+        var vList = emptyList<Joke>()
+        val n = savedInstanceState.getInt("Size")
+        lateinit var vS : String
 
-            for(i in 0 until n-1){
-                try {
-                    //recuperation de la string sérialiser
-                    vS = savedInstanceState.getString("Joke$i")!!
-                    //recuperation de la joke depuis le string sérialiser
-                    vList = vList.plus(Json(JsonConfiguration.Stable).parse(Joke.serializer(), vS))
-                }
-                catch (e : Exception){
-                    Log.d("ERROR2", e.toString())
-                }
-            }
+        for(i in 0 until n-1){
+            //recuperation de la string sérialiser
+            vS = savedInstanceState.getString("Joke$i")!!
 
-            //ajout des jokes + notify
-            aVA.jokes = aVA.jokes.plus(vList)
+            //recuperation de la joke depuis le string sérialiser
+            vList = vList.plus(Json(JsonConfiguration.Stable).parse(Joke.serializer(), vS))
         }
-        catch (e : Exception){
-            Log.d("ERROR", e.toString())
-        }
+        //ajout des jokes + notify
+        aVA.jokes = aVA.jokes.plus(vList)
     }
 }
