@@ -100,5 +100,11 @@ class MainActivity : AppCompatActivity() {
         aVA.jokes = aVA.jokes.plus(vList)
     }
 
-
+    fun shareClicked(view : View){
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, aVA.jokes[recyclerView.findContainingViewHolder(view)!!.adapterPosition].toString())
+        }, "Partager")
+        startActivity(share)
+    }
 }

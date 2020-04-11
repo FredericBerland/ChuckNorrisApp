@@ -20,12 +20,11 @@ class JokeView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
     fun setupView(model: Model){
         aTextView.text = model.pS
-        aBool = model.pFavorite
         if(model.pFavorite)
             aStar.setImageResource(R.drawable.ic_star_black_24dp)
         else
             aStar.setImageResource(R.drawable.ic_star_border_black_24dp)
-
+        aBool = model.pFavorite
     }
 
     fun inflate(layout : Int) : JokeView{

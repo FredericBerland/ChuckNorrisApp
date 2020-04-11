@@ -28,7 +28,12 @@ class JokesAdapter() : RecyclerView.Adapter<JokesAdapter.JokesViewHolder>(){
     override fun getItemCount() = jokes.size
 
     override fun onBindViewHolder(holder: JokesViewHolder, position: Int) {
-        var vM = JokeView.Model(jokes[position].toString(), false)
+        lateinit var vM : JokeView.Model
+
+        if (holder.jokeView.aBool)
+            vM = JokeView.Model(jokes[position].toString(), true)
+        else
+            vM = JokeView.Model(jokes[position].toString(), false)
         holder.jokeView.setupView(vM)
 
         holder.jokeView.aStar.setOnClickListener {
