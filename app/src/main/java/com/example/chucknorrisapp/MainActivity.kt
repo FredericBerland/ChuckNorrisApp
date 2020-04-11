@@ -1,20 +1,19 @@
 package com.example.chucknorrisapp
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.TextView
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.serialization.UnstableDefault
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
+import kotlinx.serialization.UnstableDefault
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import java.util.concurrent.TimeUnit
@@ -51,6 +50,9 @@ class MainActivity : AppCompatActivity() {
                     add10Joke(viewAdapter)
             }
         })
+
+        val callback = JokeTouchHelper( {m-> viewAdapter.deleteJoke(m)}, {m, n-> viewAdapter.moveInList(m, n)})
+        callback.attachToRecyclerView(recyclerView)
     }
 
     @UnstableDefault
@@ -97,4 +99,6 @@ class MainActivity : AppCompatActivity() {
         //ajout des jokes + notify
         aVA.jokes = aVA.jokes.plus(vList)
     }
+
+
 }
