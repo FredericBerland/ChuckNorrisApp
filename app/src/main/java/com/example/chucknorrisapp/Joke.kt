@@ -16,6 +16,7 @@ class Joke(val categories:List<String>,
            val url:String,
            val value:String){
 
+    var fav : Boolean = false
 
     override fun equals(other: Any?): Boolean {
         var vB = true

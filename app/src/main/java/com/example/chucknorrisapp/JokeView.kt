@@ -14,7 +14,6 @@ class JokeView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     lateinit var aTextView : TextView
     lateinit var aShare : ImageView
     lateinit var aStar : ImageView
-    var aBool = false
 
     data class Model(val pS : String, val pFavorite : Boolean)
 
@@ -24,7 +23,6 @@ class JokeView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
             aStar.setImageResource(R.drawable.ic_star_black_24dp)
         else
             aStar.setImageResource(R.drawable.ic_star_border_black_24dp)
-        aBool = model.pFavorite
     }
 
     fun inflate(layout : Int) : JokeView{

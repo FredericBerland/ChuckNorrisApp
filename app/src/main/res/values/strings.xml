@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">ChuckNorrisApp</string>
-    <string name="add_a_joke">Add 10 jokes</string>
     <string name="boutonshare">boutonshare</string>
     <string name="boutonstar">boutonstar</string>
 </resources>
