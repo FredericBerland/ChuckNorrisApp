@@ -10,14 +10,15 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="270dp"
+            android:id="@+id/my_tv"
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:padding="10dp"
             android:textAlignment="textStart"
             android:layout_marginBottom="5dp"
             android:textColor="#000000"
-            android:id="@+id/my_tv" />
+            android:layout_width="330dp"
+            android:focusable="auto" />
 
         <ImageView
             android:id="@+id/my_share"
