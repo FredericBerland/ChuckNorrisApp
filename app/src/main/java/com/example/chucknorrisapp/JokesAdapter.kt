@@ -31,20 +31,6 @@ class JokesAdapter(pFav : List<Joke>) : RecyclerView.Adapter<JokesAdapter.JokesV
             vM = JokeView.Model(jokes[position].toString(), false)
         }
         holder.jokeView.setupView(vM)
-
-        holder.jokeView.aStar.setOnClickListener {
-            if(jokes[position].fav) {
-                vM = JokeView.Model(jokes[position].toString(), false)
-                jokes[position].fav = false
-                aFavList = aFavList.minus(jokes[position])
-            }
-            else {
-                vM = JokeView.Model(jokes[position].toString(), true)
-                jokes[position].fav = true
-                aFavList = aFavList.plus(jokes[position])
-            }
-            holder.jokeView.setupView(vM)
-        }
     }
 
     fun moveInList(from : Int, to : Int) : Boolean{
@@ -55,8 +41,8 @@ class JokesAdapter(pFav : List<Joke>) : RecyclerView.Adapter<JokesAdapter.JokesV
     }
 
     fun deleteJoke(ind : Int){
-        jokes = jokes.minus(jokes[ind])
-        if(jokes[ind].fav)
+        if (jokes[ind].fav)
             aFavList = aFavList.minus(jokes[ind])
+        jokes = jokes.minus(jokes[ind])
     }
 }

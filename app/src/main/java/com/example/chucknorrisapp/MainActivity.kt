@@ -124,6 +124,21 @@ class MainActivity : AppCompatActivity() {
         startActivity(share)
     }
 
+    fun starClicked(view: View) {
+        val position = recyclerView.findContainingViewHolder(view)!!.adapterPosition
+        lateinit var vM: JokeView.Model
+        if (aVA.jokes[position].fav) {
+            vM = JokeView.Model(aVA.jokes[position].toString(), false)
+            aVA.jokes[position].fav = false
+            aVA.aFavList = aVA.aFavList.minus(aVA.jokes[position])
+        } else {
+            vM = JokeView.Model(aVA.jokes[position].toString(), true)
+            aVA.jokes[position].fav = true
+            aVA.aFavList = aVA.aFavList.plus(aVA.jokes[position])
+        }
+        (view.parent as JokeView).setupView(vM)
+    }
+
     override fun onStop() {
         super.onStop()
         aFav.edit().apply { aVA.aFavList.forEach {putString("Joke${aVA.jokes.indexOf(it)}", Json(JsonConfiguration.Stable).stringify(Joke.serializer(), it))} }.apply()

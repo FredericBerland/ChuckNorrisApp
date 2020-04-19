@@ -32,5 +32,4 @@ class JokeView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         aStar =findViewById(R.id.my_star)
         return this
     }
-
 }
